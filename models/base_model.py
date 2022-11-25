@@ -11,13 +11,13 @@ from uuid import uuid4
 class BaseModel:
     """ Creates the base model class that serves as a mother class to all other classes """
 
-    def __init__(self, *arg, **args):
+    def __init__(self, *args, **kwargs):
     
-    if args:
-        args["created_at"] = datetime.strptime(args["created_at"], "%Y-%m-%dT%H:%M:%S.%f")
-        args["updated_at"] = datetime.strptime(args["updated_at"], "%Y-%m-%dT%H:%M:%S.%f")
+    if kwargs:
+        kwargs["created_at"] = datetime.strptime(kwargs["created_at"], "%Y-%m-%dT%H:%M:%S.%f")
+        kwargs["updated_at"] = datetime.strptime(kwargs["updated_at"], "%Y-%m-%dT%H:%M:%S.%f")
 
-        for key, value in args.item():
+        for key, value in kwargs.item():
             if key != "__class__":
                 setattr(self, key, value)
     else:
