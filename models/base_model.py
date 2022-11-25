@@ -1,0 +1,45 @@
+#!/usr/bin/python3
+""" defines the base_model """
+
+
+from datetime import datetime
+
+import models
+from uuid import uuid4
+
+
+class BaseModel:
+    """ Creates the base model class that serves as a mother class to all other classes """
+
+    def __init__(self, *arg, **args):
+    
+    if args:
+        args["created_at"] = datetime.strptime(args["created_at"], "%Y-%m-%dT%H:%M:%S.%f")
+        args["updated_at"] = datetime.strptime(args["updated_at"], "%Y-%m-%dT%H:%M:%S.%f")
+
+        for key, value in args.item():
+            if key != "__class__":
+                setattr(self, key, value)
+    else:
+        self.id = str(uuid4())
+        self.created_at = datetime.now()
+        self.updated_at = datetime.now()
+        models.storage.new(self)
+
+
+    def save(self):
+        """ updates the updated at time with the current date time
+        """
+        self.updated_at = datetime.now()
+        models.storage.save()
+
+    def __str__(self):
+        """ string representation of BaseModel class """
+        return "[{}] ({}) {}".format(self.__class__.__name__, self.id, self.__dict__)
+    def to_dict(self):
+        """ representation of an instance in dict format """
+        new_dict = dict(self.__dict__)
+        new_dict['created_at'] = self.__dict__['created_at'].isoformat()
+        new_dict['updated_at'] = self.__dict__['updated_at'].isoformat()
+        new_dict['__class__'] = self.__class__.__name__
+        return new_dict
