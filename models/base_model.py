@@ -15,18 +15,17 @@ class BaseModel:
     def __init__(self, *args, **kwargs):
 
         if kwargs:
-            tf = "%Y-%m-%dT%H:%M:%S.%f"
-            kwargs["created_at"] = datetime.strptime(kwargs["created_at"], tf)
-        kwargs["updated_at"] = datetime.strptime(kwargs["updated_at"], tf)
-
-        for key, value in kwargs.item():
-            if key != "__class__":
-                setattr(self, key, value)
-    else:
-        self.id = str(uuid4())
-        self.created_at = datetime.now()
-        self.updated_at = datetime.now()
-        models.storage.new(self)
+            df = '%Y-%m-%dT%H:%M:%S.%f'
+            kwargs['created_at'] = datetime.strptime(kwargs['created_at'], df)
+            kwargs['updated_at'] = datetime.strptime(kwargs['updated_at'], df,)
+            for key, value in kwargs.items():
+                if key != '__class__':
+                    setattr(self, key, value)
+        else:
+            self.id = str(uuid.uuid4())
+            self.created_at = datetime.now()
+            self.updated_at = datetime.now()
+            models.storage.new(self)
 
     def save(self):
         """ updates the updated at time with the current date time
