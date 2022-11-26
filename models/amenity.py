@@ -4,8 +4,8 @@ from models.base_model import BaseModel
 
 
 class Amenity(BaseModel):
-    """ Creates the Amenity Model 
-    Arguments: 
+    """ Creates the Amenity Model
+    Arguments:
         name = Name of the Amenity
     """
     name = ""

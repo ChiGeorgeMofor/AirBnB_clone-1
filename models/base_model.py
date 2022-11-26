@@ -9,13 +9,15 @@ from uuid import uuid4
 
 
 class BaseModel:
-    """ Creates the base model class that serves as a mother class to all other classes """
+    """ Creates the base model class
+    that serves as a mother class to all other classes """
 
     def __init__(self, *args, **kwargs):
-    
-    if kwargs:
-        kwargs["created_at"] = datetime.strptime(kwargs["created_at"], "%Y-%m-%dT%H:%M:%S.%f")
-        kwargs["updated_at"] = datetime.strptime(kwargs["updated_at"], "%Y-%m-%dT%H:%M:%S.%f")
+
+        if kwargs:
+            tf = "%Y-%m-%dT%H:%M:%S.%f"
+            kwargs["created_at"] = datetime.strptime(kwargs["created_at"], tf)
+        kwargs["updated_at"] = datetime.strptime(kwargs["updated_at"], tf)
 
         for key, value in kwargs.item():
             if key != "__class__":
@@ -26,7 +28,6 @@ class BaseModel:
         self.updated_at = datetime.now()
         models.storage.new(self)
 
-
     def save(self):
         """ updates the updated at time with the current date time
         """
@@ -35,7 +36,9 @@ class BaseModel:
 
     def __str__(self):
         """ string representation of BaseModel class """
-        return "[{}] ({}) {}".format(self.__class__.__name__, self.id, self.__dict__)
+        sc = self.__class__.__name__
+        return "[{}] ({}) {}".format(sc, self.id, self.__dict__)
+
     def to_dict(self):
         """ representation of an instance in dict format """
         new_dict = dict(self.__dict__)

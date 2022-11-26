@@ -8,7 +8,7 @@ class Place(BaseModel):
     arguments:
     city_id(string): unique id of the city
     user_id(string): unique id of the user
-    name(string): the name of the place 
+    name(string): the name of the place
     description(string): description of the place
     number_rooms(integer):number of rooms required
     number_bathrooms(integer):number of bathrooms
