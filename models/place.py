@@ -7,7 +7,6 @@ It inherits from the BaseModel
 from models.base_model import BaseModel
 from typing import List
 
-
 class Place(BaseModel):
     """The Place Model"""
 
